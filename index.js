@@ -25,7 +25,7 @@ MongoClient.connect(url, function(err, db) {
 			console.log(err);
 		} else {
 			console.log('Inserted %d documents into the "users" collection. The documents inserted with "_id" are:', result.length, result);
-			collection.find({name: 'modulus admin'}, function(err, results) {
+			collection.find({name: 'modulus admin'}).toArray(function(err, results) {
 				if(err) {
 					console.log( err );
 				}
@@ -35,7 +35,7 @@ MongoClient.connect(url, function(err, db) {
 				else {
 					console.log( "Нет документов с данным условием поиска." );
 				}
-			}) //find
+			}); //find
 			collection.remove();
 		}
 		//Close connection
