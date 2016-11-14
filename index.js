@@ -24,7 +24,7 @@ MongoClient.connect(url, function(err, db) {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log('Inserted %d documents into the "users" collection. The documents inserted with "_id" are:', result.result.n, result);
+			console.log('Вставлено %d документов в коллекцию "users". Вставленные документы перечислены с идентификаторами "_id":', result.result.n, result);
 			collection.find({name: 'modulus admin'}).toArray(function(err, results) {
 				if(err) {
 					console.log( err );
