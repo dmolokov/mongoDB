@@ -1,11 +1,6 @@
-﻿// Retrieve
-"use strict"
+﻿"use strict"
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:88/exampleDb";
-
-//var server=require('mongodb').Server;
-
-//var mongoclient=new MongoClient(new server('localhost',27017));
+var url = "mongodb://localhost:27017/exampleDb";
 
 // Connect to the db
 MongoClient.connect(url, function(err, db) {
@@ -15,17 +10,6 @@ MongoClient.connect(url, function(err, db) {
 	else {
 		console.log( "Соединение установлено." );
 	}
-	
-	//var collection = db.collection('test');
-	//var doc1 = {'hello':'doc1'};
-	//var doc2 = {'hello':'doc2'};
-	//var lotsOfDocs = [{'hello':'doc3'}, {'hello':'doc4'}];
-	//
-	//collection.insert(doc1);
-	//
-	//collection.insert(doc2, {w:1}, function(err, result) {});
-	//
-	//collection.insert(lotsOfDocs, {w:1}, function(err, result) {});
 	
 	// Get the documents collection
     var collection = db.collection('users');
@@ -37,15 +21,25 @@ MongoClient.connect(url, function(err, db) {
 
     // Insert some users
     collection.insert([user1, user2, user3], function (err, result) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('Inserted %d documents into the "users" collection. The documents inserted with "_id" are:', result.length, result);
-      }
-      //Close connection
-      db.close();
+		if (err) {
+			console.log(err);
+		} else {
+			console.log('Inserted %d documents into the "users" collection. The documents inserted with "_id" are:', result.length, result);
+			collection.find({name: 'modulus admin'}, function(err, results) {
+				if(err) {
+					console.log( err );
+				}
+				else if(results.length){
+					console.log( "Найденный:", results );
+				}
+				else {
+					console.log( "Нет документов с данным условием поиска." );
+				}
+			}) //find
+			collection.remove();
+		}
+		//Close connection
+		db.close();
     });
-	
-	
 });
 
